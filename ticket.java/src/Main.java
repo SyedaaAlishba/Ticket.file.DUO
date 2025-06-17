@@ -192,99 +192,109 @@ public class Main {
 
         } while (usership != 1 && usership != 2);
 
+
+        boolean checkLogOrSign=false;
+        int check;
         if (usership == 1) {
             sc.nextLine();
             System.out.println("press 1) for login ");
             System.out.println("press 2) for signup");
 
-            int check = sc.nextInt();
-            sc.nextLine();
+            while(!checkLogOrSign) {
+                check = sc.nextInt();
+                sc.nextLine();
+                if (check == 1 || check == 2) {
+                    checkLogOrSign = true;
+                } else {
+                    System.out.println("Please Enter Valid Choice");
+                }
 
-            if (check == 1) {
-                System.out.println("LOGIN PAGE");
-                System.out.println("***************************************");
-                {
-                    System.out.println("enter the user name");
-                    String userlogin1 = sc
-                            .nextLine();
+                if (check == 1) {
+                    System.out.println("LOGIN PAGE");
+                    System.out.println("***************************************");
+                    {
+                        System.out.println("enter the user name");
+                        String userlogin1 = sc
+                                .nextLine();
+                        sc
+                                .nextLine();
+                        System.out.println("enter the password");
+                        String userpass = sc
+                                .nextLine();
+
+                        if (user == null || (user.username == null && user.pass == null)) {
+                            System.out.println("Please make an account first.");
+                        }
+                    }
+                    System.out.println("press 2) for signup");
+                    check = sc
+                            .nextInt();
                     sc
                             .nextLine();
-                    System.out.println("enter the password");
-                    String userpass = sc
-                            .nextLine();
 
-                    if (user == null || (user.username == null && user.pass == null)) {
-                        System.out.println("Please make an account first.");
-                    }
-                }
-                System.out.println("press 2) for signup");
-                check = sc
-                        .nextInt();
-                sc
-                        .nextLine();
-
-
-            }
-
-            if (check == 2) {
-                System.out.println("SIGNUP PAGE");
-                System.out.println("***************************************");
-
-
-                System.out.print("Enter your email: ");
-                String email = sc.nextLine();
-                String ans;
-                while (true) {
-
-                    if (validemail(email)) {
-                        System.out.println("✅ Email accepted.");
-                        break;
-                    } else {
-                        System.out.println("❌ Invalid email format. Please try again.");
-                        System.out.print("Enter your email: ");
-                        email = sc.nextLine();
-                    }
 
                 }
 
-
-                //username
-                System.out.print("enter the username:");
-                String username = sc.nextLine();
-
-                //password
-
-                String password;
-                do {
-                    System.out.print("Enter your password:");
-                    password = sc.nextLine();
-                    if (passcheck(password)) {
-                        System.out.println("✅ your password is strong");
-                        user = new USER(email, password, username);
-                        break;
-                    }
-                    if (!passcheck(password)) {
-                        System.out.println("❌ Invalid password format. Please try again.");
-                    }
-
-                } while (true);
-                System.out.println("✅ Signup successful!");
-                boolean aftersignup = true;
                 if (check == 2) {
-                    while (aftersignup) {
-                        System.out.println("LOGIN PAGE");
-                        System.out.println("***************************************");
+                    System.out.println("SIGNUP PAGE");
+                    System.out.println("***************************************");
 
-                        System.out.print("enter the user name: ");
-                        String userlogin1 = sc.nextLine();
-                        System.out.print("enter the password: ");
-                        String userpass = sc.nextLine();
 
-                        if ((userlogin1.equals(user.username) && userpass.equals(user.pass))) {
-                            System.out.println("✅login successful");
-                            aftersignup = false;
+                    System.out.print("Enter your email: ");
+                    String email = sc.nextLine();
+                    String ans;
+                    while (true) {
+
+                        if (validemail(email)) {
+                            System.out.println("✅ Email accepted.");
+                            break;
                         } else {
-                            System.out.println("❌login unsuccessful");
+                            System.out.println("❌ Invalid email format. Please try again.");
+                            System.out.print("Enter your email: ");
+                            email = sc.nextLine();
+                        }
+
+                    }
+
+
+                    //username
+                    System.out.print("enter the username:");
+                    String username = sc.nextLine();
+
+                    //password
+
+                    String password;
+                    do {
+                        System.out.print("Enter your password:");
+                        password = sc.nextLine();
+                        if (passcheck(password)) {
+                            System.out.println("✅ your password is strong");
+                            user = new USER(email, password, username);
+                            break;
+                        }
+                        if (!passcheck(password)) {
+                            System.out.println("❌ Invalid password format. Please try again.");
+                        }
+
+                    } while (true);
+                    System.out.println("✅ Signup successful!");
+                    boolean aftersignup = true;
+                    if (check == 2) {
+                        while (aftersignup) {
+                            System.out.println("LOGIN PAGE");
+                            System.out.println("***************************************");
+
+                            System.out.print("enter the user name: ");
+                            String userlogin1 = sc.nextLine();
+                            System.out.print("enter the password: ");
+                            String userpass = sc.nextLine();
+
+                            if ((userlogin1.equals(user.username) && userpass.equals(user.pass))) {
+                                System.out.println("✅login successful");
+                                aftersignup = false;
+                            } else {
+                                System.out.println("❌login unsuccessful");
+                            }
                         }
                     }
                 }
@@ -490,7 +500,7 @@ public class Main {
         System.out.println("***************************************");
         System.out.println("\t\tFLIGHT BOOKING ✈️");
         System.out.println("***************************************");
-String[]  seatnumfor1 = {"1A","2A" ,"3A" ,"4A","5A","6A" ,"7A" ,"8A","9A","10A" ,"11A" ,"12A","13A","14A" ,"15A" ,"16A"};
+        String[]  seatnumfor1 = {"1A","2A" ,"3A" ,"4A","5A","6A" ,"7A" ,"8A","9A","10A" ,"11A" ,"12A","13A","14A" ,"15A" ,"16A"};
         String[]  seatnumfor2 = {"1A","2A" ,"3A" ,"4A","5A","6A" ,"7A" ,"8A","9A","10A" ,"11A" ,"12A","13A","14A" ,"15A" ,"16A"};
         String[]  seatnumfor3 = {"1A","2A" ,"3A" ,"4A","5A","6A" ,"7A" ,"8A","9A","10A" ,"11A" ,"12A","13A","14A" ,"15A" ,"16A"};
         Random rand = new Random();
@@ -523,16 +533,20 @@ String[]  seatnumfor1 = {"1A","2A" ,"3A" ,"4A","5A","6A" ,"7A" ,"8A","9A","10A" 
         }
 
         if (sp != -1) {
-            String[] gate = {"A" , "B" , "C"};
+            String[] gate = {"A", "B", "C"};
             while (!destinationLocation) {
                 System.out.println("WHERE TO GO?📍");
                 dL = sc.nextLine();
 
-                for (int i = 0; i < arr.length; i++) {
-                    if (arr[i][0].equalsIgnoreCase(dL)) {
-                        destinationLocation = true;
-                        break;
+                if (!dL.equalsIgnoreCase(cL)) {
+                    for (int i = 0; i < arr.length; i++) {
+                        if (arr[i][0].equalsIgnoreCase(dL)) {
+                            destinationLocation = true;
+                            break;
+                        }
                     }
+                } else {
+                    System.out.println("Destination Location Can't be same as Current Location");
                 }
                 if (!destinationLocation) {
                     System.out.println("❌ Invalid location. Please try again.");
@@ -657,28 +671,27 @@ String[]  seatnumfor1 = {"1A","2A" ,"3A" ,"4A","5A","6A" ,"7A" ,"8A","9A","10A" 
                     flightTimeIndex = -1;
             }
             int now = 0;
-boolean con3=  true;
+            boolean con3 = true;
             int scheduleChoice = 0;
             if (flightTimeIndex != -1) {
                 System.out.println("Select your flight schedule:");
                 System.out.println("1. " + flightTimes[flightTimeIndex][0]);
                 System.out.println("2. " + flightTimes[flightTimeIndex][1]);
-while(con3) {
-    System.out.println("Choose 1 or 2: ");
+                while (con3) {
+                    System.out.println("Choose 1 or 2: ");
 
-     scheduleChoice = sc.nextInt();
-    now = scheduleChoice;
-    sc.nextLine();
-    if(scheduleChoice == 1 || scheduleChoice == 2){
-        con3 = false;
-    }
-    else{
-        System.out.println("enter the correct selection");
-        //System.out.println("Select your flight schedule:");
-        System.out.println("1. " + flightTimes[flightTimeIndex][0]);
-        System.out.println("2. " + flightTimes[flightTimeIndex][1]);
-    }
-}
+                    scheduleChoice = sc.nextInt();
+                    now = scheduleChoice;
+                    sc.nextLine();
+                    if (scheduleChoice == 1 || scheduleChoice == 2) {
+                        con3 = false;
+                    } else {
+                        System.out.println("enter the correct selection");
+                        //System.out.println("Select your flight schedule:");
+                        System.out.println("1. " + flightTimes[flightTimeIndex][0]);
+                        System.out.println("2. " + flightTimes[flightTimeIndex][1]);
+                    }
+                }
                 if (scheduleChoice == 1 || scheduleChoice == 2) {
                     String selectedTime = flightTimes[flightTimeIndex][scheduleChoice - 1];
                     System.out.println("Your Flight scheduled for  " + selectedTime);
@@ -695,18 +708,17 @@ while(con3) {
 
 
             System.out.println("***************************************");
-boolean con5 = true;
-while(con5) {
-    System.out.println("Select the Class (Choose number)");
-    System.out.println("1- First Class \n2- Business Class \n3- Economy Class");
-    chooseClass = sc.nextInt();
-    if(chooseClass == 1 || chooseClass == 2 || chooseClass == 3){
-        con5 = false;
-    }
-    else{
-        System.out.println("enter the correct class");
-    }
-}
+            boolean con5 = true;
+            while (con5) {
+                System.out.println("Select the Class (Choose number)");
+                System.out.println("1- First Class \n2- Business Class \n3- Economy Class");
+                chooseClass = sc.nextInt();
+                if (chooseClass == 1 || chooseClass == 2 || chooseClass == 3) {
+                    con5 = false;
+                } else {
+                    System.out.println("enter the correct class");
+                }
+            }
             int price = -1;
             if (flightTimeIndex >= 0 && flightTimeIndex < flightPrices.length &&
                     chooseClass >= 1 && chooseClass <= 3) {
@@ -726,114 +738,120 @@ while(con5) {
 
             System.out.println("***************************************");
 
-            System.out.println("How Many Persons to Go?");
-            choosePersons = sc.nextInt();
+            boolean personCheck = false;
+            while (!personCheck) {
+                System.out.println("How Many Persons to Go?");
+                choosePersons = sc.nextInt();
 
-            sc.nextLine(); // Consume leftover newline
+                sc.nextLine(); // Consume leftover newline
 
-            String[] names = new String[choosePersons];
-            String[] ids = new String[choosePersons];
+                if (choosePersons > 0) {
 
-            for (int i = 0; i < choosePersons; i++) {
-                System.out.println("Enter name of person " + (i + 1) + ":");
-                names[i] = sc.nextLine();
+                    personCheck = true;
 
-                System.out.println("Enter ID of person " + (i + 1) + ":");
-                ids[i] = sc.nextLine();
-            }
-boolean con4 = true ;
-            int currencyChoice = 0;
-            System.out.println("***************************************");
-            while(con4) {
-                System.out.println("Choose Payment Currency");
-                System.out.println("1- Dollars\t\t\t($) \n2- Rupees\t\t\t(PKR) \n3- Dirham\t\t\t(AED) \n4- Chinese yuan\t\t(¥)");
-                 currencyChoice = sc.nextInt();
-                sc.nextLine(); // consume newline
-if(currencyChoice ==1 || currencyChoice==2 || currencyChoice == 3 || currencyChoice == 4){
-    con4 = false;
-}
-else{
-    System.out.println("enter the correct payment currency");
-}
-            }
-            String currencySymbol = "";
-            double conversionRate = 1.0; // PKR by default
+                    String[] names = new String[choosePersons];
+                    String[] ids = new String[choosePersons];
 
-            switch (currencyChoice) {
-                case 1: // Dollars
-                    currencySymbol = "$";
-                    conversionRate = 1.0 / 280.0; // Example: 1 USD = 280 PKR
-                    break;
-                case 2: // Rupees
-                    currencySymbol = "PKR";
-                    conversionRate = 1.0; // PKR to PKR
-                    break;
-                case 3: // Dirham
-                    currencySymbol = "AED";
-                    conversionRate = 1.0 / 76.0; // Example: 1 AED = 76 PKR
-                    break;
-                case 4: // Chinese Yuan
-                    currencySymbol = "¥";
-                    conversionRate = 1.0 / 39.0; // Example: 1 CNY = 39 PKR
-                    break;
-                default:
-                    System.out.println("Invalid currency selection. Defaulting to PKR.");
-                    currencySymbol = "PKR";
-                    conversionRate = 1.0;
-            }
+                    for (int i = 0; i < choosePersons; i++) {
+                        System.out.println("Enter name of person " + (i + 1) + ":");
+                        names[i] = sc.nextLine();
 
-            int totalFarePKR = price * choosePersons;
-            double convertedFare = totalFarePKR * conversionRate;
+                        System.out.println("Enter ID of person " + (i + 1) + ":");
+                        ids[i] = sc.nextLine();
+                    }
+                    boolean con4 = true;
+                    int currencyChoice = 0;
+                    System.out.println("***************************************");
+                    while (con4) {
+                        System.out.println("Choose Payment Currency");
+                        System.out.println("1- Dollars\t\t\t($) \n2- Rupees\t\t\t(PKR) \n3- Dirham\t\t\t(AED) \n4- Chinese yuan\t\t(¥)");
+                        currencyChoice = sc.nextInt();
+                        sc.nextLine(); // consume newline
+                        if (currencyChoice == 1 || currencyChoice == 2 || currencyChoice == 3 || currencyChoice == 4) {
+                            con4 = false;
+                        } else {
+                            System.out.println("enter the correct payment currency");
+                        }
+                    }
+                    String currencySymbol = "";
+                    double conversionRate = 1.0; // PKR by default
 
-            System.out.printf("Total fare for %d person(s): %.2f %s%n", choosePersons, convertedFare, currencySymbol);
+                    switch (currencyChoice) {
+                        case 1: // Dollars
+                            currencySymbol = "$";
+                            conversionRate = 1.0 / 280.0; // Example: 1 USD = 280 PKR
+                            break;
+                        case 2: // Rupees
+                            currencySymbol = "PKR";
+                            conversionRate = 1.0; // PKR to PKR
+                            break;
+                        case 3: // Dirham
+                            currencySymbol = "AED";
+                            conversionRate = 1.0 / 76.0; // Example: 1 AED = 76 PKR
+                            break;
+                        case 4: // Chinese Yuan
+                            currencySymbol = "¥";
+                            conversionRate = 1.0 / 39.0; // Example: 1 CNY = 39 PKR
+                            break;
+                        default:
+                            System.out.println("Invalid currency selection. Defaulting to PKR.");
+                            currencySymbol = "PKR";
+                            conversionRate = 1.0;
+                    }
 
-            System.out.println("***************************************");
+                    int totalFarePKR = price * choosePersons;
+                    double convertedFare = totalFarePKR * conversionRate;
 
-            System.out.println("Select Payment Method");
-            System.out.println("1- Standard Chartered \n2- National Bank of Pakistan \n3- HSBC UAE \n4- Commercial Bank of China (ICBC) ");
-            int bank = sc.nextInt();
-            sc.nextLine();
-            switch (bank) {
-                case 1:
-                    System.out.println("You selected Standard Chartered ");
-                    break;
-                case 2:
-                    System.out.println("You selected  National Bank of Pakistan ");
-                    break;
-                case 3:
-                    System.out.println("You selected HSBC UAE");
-                    break;
-                case 4:
-                    System.out.println(" You selected Commercial Bank of China (ICBC)");
-                    break;
-                default:
-                    System.out.println("Select Valid Option Please");
-            }
-            int flag = -1;
-            boolean paymentStatus = false;
-            while (!paymentStatus) {
-                System.out.println("Payment Done? \n1- YES \n2-NO");
-                flag = sc.nextInt();
-                if (flag == 1) {
-                    paymentStatus = true;
-                    break;
-                } else {
-                    System.out.println("Clear Your Dues Please");
-                }
-            }
-            try (FileWriter writer = new FileWriter("C:\\Users\\HP\\Desktop\\Ticket.txt")) {
-                writer.write("\n***************************************\n");
-                writer.write("           ✈️ Ticket Summary ✈️         \n");
-                writer.write("***************************************\n");
+                    System.out.printf("Total fare for %d person(s): %.2f %s%n", choosePersons, convertedFare, currencySymbol);
 
-                for (
-                        int i = 0;
-                        i < choosePersons; i++) {
-                    writer.write("----------- Ticket " + (i + 1) + " -----------\n");
-                    writer.write("Passenger Name : " + names[i] + "\n");
-                    writer.write("Passenger ID   : " + ids[i] + "\n");
-                    writer.write("Airline        : " + selectedAirline + "\n");
-                    writer.write("Departure      : " + flightTimes[flightTimeIndex][now - 1] + "\n");
+                    System.out.println("***************************************");
+
+                    System.out.println("Select Payment Method");
+                    System.out.println("1- Standard Chartered \n2- National Bank of Pakistan \n3- HSBC UAE \n4- Commercial Bank of China (ICBC) ");
+                    int bank = sc.nextInt();
+                    sc.nextLine();
+                    switch (bank) {
+                        case 1:
+                            System.out.println("You selected Standard Chartered ");
+                            break;
+                        case 2:
+                            System.out.println("You selected  National Bank of Pakistan ");
+                            break;
+                        case 3:
+                            System.out.println("You selected HSBC UAE");
+                            break;
+                        case 4:
+                            System.out.println(" You selected Commercial Bank of China (ICBC)");
+                            break;
+                        default:
+                            System.out.println("Select Valid Option Please");
+                    }
+                    int flag = -1;
+                    boolean paymentStatus = false;
+                    while (!paymentStatus) {
+                        System.out.println("Payment Done? \n1- YES \n2-NO");
+                        flag = sc.nextInt();
+                        if (flag == 1) {
+                            paymentStatus = true;
+                            break;
+                        } else {
+                            System.out.println("Clear Your Dues Please");
+                        }
+                    }
+
+                    try (FileWriter writer = new FileWriter("C:\\Users\\PMLS\\Documents\\Ticket.txt")) {
+                        writer.write("\n***************************************\n");
+                        writer.write("           ✈️ Ticket Summary ✈️         \n");
+                        writer.write("***************************************\n");
+
+                        for (
+                                int i = 0;
+                                i < choosePersons; i++) {
+                            writer.write("----------- Ticket " + (i + 1) + " -----------\n");
+                            writer.write("Passenger Name : " + names[i] + "\n");
+                            writer.write("Passenger ID   : " + ids[i] + "\n");
+                            writer.write("Airline        : " + selectedAirline + "\n");
+                            writer.write("Departure      : " + flightTimes[flightTimeIndex][now - 1] + "\n");
 //                    if(travelType == 1){
 //                        writer.write("Arrival      : " + (Arrivaltimedirect[flightTimeIndex][now - 1]) + "\n");
 //                    }
@@ -842,31 +860,35 @@ else{
 //                        writer.write("Arrival      : " +(Arrivaltimevia[flightTimeIndex][now - 1])  + "\n");
 //                    }
 
-                    if(chooseClass == 1){
-                        writer.write("SeatNum           : "+seatnumfor1[randomnum1] + "\n");
-                        writer.write("Gate           :" + gate[0] + "\n");
-                        writer.write("Class          : First Class" + "\n");
-                    }
-                    if(chooseClass == 2){
-                        writer.write("SeatNum           : "+seatnumfor2[randomnum2] + "\n");
-                        writer.write("Gate           :" + gate[1] + "\n");
-                        writer.write("Class          : Bussiness Class" + "\n");
-                    }
-                    if(chooseClass == 3){
-                        writer.write("SeatNum           : "+seatnumfor3[randomnum3] + "\n");
-                        writer.write("Gate           :" + gate[3]+ "\n");
-                        writer.write("Class          : Economy Class" + "\n");
-                    }
-                    writer.write("From           : " + cL.toUpperCase() + "\n");
-                    writer.write("To             : " + dL.toUpperCase() + "\n");
-                    writer.write("--------------------------------\n\n");
+                            if (chooseClass == 1) {
+                                writer.write("SeatNum           : " + seatnumfor1[randomnum1] + "\n");
+                                writer.write("Gate           :" + gate[0] + "\n");
+                                writer.write("Class          : First Class" + "\n");
+                            }
+                            if (chooseClass == 2) {
+                                writer.write("SeatNum           : " + seatnumfor2[randomnum2] + "\n");
+                                writer.write("Gate           :" + gate[1] + "\n");
+                                writer.write("Class          : Bussiness Class" + "\n");
+                            }
+                            if (chooseClass == 3) {
+                                writer.write("SeatNum           : " + seatnumfor3[randomnum3] + "\n");
+                                writer.write("Gate           :" + gate[3] + "\n");
+                                writer.write("Class          : Economy Class" + "\n");
+                            }
+                            writer.write("From           : " + cL.toUpperCase() + "\n");
+                            writer.write("To             : " + dL.toUpperCase() + "\n");
+                            writer.write("--------------------------------\n\n");
 
+                        }
+                    } catch (IOException e) {
+                        System.out.println("not possible");
+                    }
+                } else {
+                    System.out.println("Enter Valid Number");
                 }
-                            }catch(IOException e  ){
-                System.out.println("notpossible");
-            }}else{
-            System.out.println("Current location not found.");
             }
+        }else{
+            System.out.println("Current location not found.");
         }
-        }
-
+    }
+}
