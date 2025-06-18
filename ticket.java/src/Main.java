@@ -172,20 +172,21 @@ public class Main {
     }
 
 
-    public static void printBoardingPass(String name, String flight, String from, String to, String time, String seat, String className, String gate) {
+    public static void printBoardingPass(String name, String flight, String from, String to, String time, String seat, String className, String gate,String arrival) {
         String filename = "boarding_pass_" + name.toLowerCase() + ".txt";
         try {
             FileWriter writer = new FileWriter(filename);
-            writer.write("******** BOARDING PASS ********\n");
-            writer.write("Passenger: " + name + "\n");
-            writer.write("Flight: " + flight + "\n");
-            writer.write("From: " + from + "\n");
-            writer.write("To: " + to + "\n");
+            writer.write("**************** BOARDING PASS✈️ ****************\n");
+            writer.write("Passenger     : " + name.toUpperCase() + "\n");
+            writer.write("Flight        : " + flight + "\n");
+            writer.write("From          : " + from.toUpperCase() + "\n");
+            writer.write("To            : " + to.toUpperCase() + "\n");
+            writer.write("Seat          : " + seat + "\n");
+            writer.write("Class         : " + className + "\n");
+            writer.write("Gate          : " + gate + "\n");
             writer.write("Departure Time: " + time + "\n");
-            writer.write("Seat: " + seat + "\n");
-            writer.write("Class: " + className + "\n");
-            writer.write("Gate: " + gate + "\n");
-            writer.write("*******************************\n");
+            writer.write("Arrival Time  : " + arrival + "\n");
+            writer.write("************************************************\n");
             writer.close();
             System.out.println("✅ Boarding pass saved to " + filename);
         } catch (IOException e) {
@@ -193,12 +194,27 @@ public class Main {
         }
     }
 
+    public static String generateFlightNumber(String airlineName) {
+        String code = "";
+        switch (airlineName.toLowerCase().replaceAll("\\s+", "")) {
+            case "pia": code = "PK"; break;
+            case "airindia": code = "AI"; break;
+            case "emirates": code = "EK"; break;
+            case "airblue": code = "AB"; break;
+            case "air koryo": code = "KOR"; break;
+            default: code = "XX"; break;
+        }
+
+        Random rand = new Random();
+        int number = 100 + rand.nextInt(900); // Generates a 3-digit number (100–999)
+        return code + number;
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        boolean firstconnect = false;
+//        boolean firstconnect = false;
         USER user = null;
-        boolean firstcheck = true;
+//        boolean firstcheck = true;
         int usership;
 
         do {
@@ -462,7 +478,7 @@ public class Main {
                 {"China", "Pakistan", "India", "Afghanistan", "Nepal", "North Korea", "South Korea","Kazakhstan"}, // 2
                 {"India", "China", "Nepal", "Pakistan"},                                        // 3
                 {"Iran", "Pakistan", "Afghanistan", "Iraq", "Turkey", "Turkmenistan"},         // 4
-                {"Nepal", "India", "China"},                                                   // 5
+                {"Nepal", "India", "China","Qatar"},                                                   // 5
                 {"Turkey", "Iran", "Iraq"},      {"UAE", "Saudi Arabia", "Oman", "Pakistan"},                                    // 7
                 {"Saudi Arabia", "Yemen", "Oman", "UAE", "Iraq","Pakistan"},                               // 8
                 {"Oman", "Yemen", "UAE", "Saudi Arabia"},                                       // 9
@@ -474,7 +490,7 @@ public class Main {
                 {"South Korea", "North Korea", "China"},
                 {"Bangladesh", "India", "Nepal", "China"},
                 {"Kazakhstan", "Uzbekistan", "China", "Russia","Bangladesh"},
-                {"Qatar", "UAE", "Saudi Arabia", "Oman"},
+                {"Qatar", "UAE", "Saudi Arabia", "Oman","Nepal"},
                 {"Azerbaijan", "Iran", "Turkey", "Russia"},
                 {"Russia","Azerbaijan","Kazakhstan","China"}
         };
@@ -486,7 +502,7 @@ public class Main {
 
         String[] emiratesCountries = {
                 "UAE", "Pakistan", "India", "China", "Saudi Arabia", "Iran", "Oman","Iraq", "Russia", "Qatar", "Bangladesh", "Nepal", "South Korea", "North Korea", "Turkey"};
-        String[] airIndiaCountries = {"India", "UAE","China", "Nepal", "Pakistan","Bangladesh","Kazakhstan","Turkey","yemen","Russia"};
+        String[] airIndiaCountries = {"India","Qatar", "UAE","China", "Nepal", "Pakistan","Bangladesh","Kazakhstan","Turkey","yemen","Russia"};
         String[] airKoryo={"North Korea","South Korea","China"};
 
         String[][] flightTimes = {
@@ -499,16 +515,16 @@ public class Main {
         String[][] Arrivaltimedirect = {
                 {"Tomorrow at 3:00 AM", "Tomorrow at 7:00 PM"}, // 0 → Emirates
                 {"Today at 12:00 PM", "After The Day Of Tomorrow at 2:00 AM"}, // 1 → PIA
-                {"Today at 3:00 PM", "Tomorrow at 10:00 PM"},  // 2 → AirBlue
+                {"Today at 5:00 PM", "Tomorrow at 10:00 PM"},  // 2 → AirBlue
                 {"Today at 8:00 AM", "After The Day Of Tomorrow at 1:00 AM"},   // 3 → Air India
-                {"Today at 11:00 AM", "Tomorrow at 6:00 AM"}    // 4-> AirKoryo
+                {"Today at 9:00 AM", "Tomorrow at 6:00 AM"}    // 4-> AirKoryo
         };
         String[][] Arrivaltimevia = {
-                {"Tomorrow at 12:00 AM", "Tomorrow at 12:00 PM"}, // 0 → Emirates
-                {"Today at 5:00 PM", "After The Day Of Tomorrow at 7:00 AM"}, // 1 → PIA
-                {"Today at 9:00 PM", "After The Day Of Tomorrow at 2:00 AM"},  // 2 → AirBlue
-                {"Today at 11:00 AM", "After The Day Of Tomorrow at 6:00 AM"},   // 3 → Air India
-                {"Today at 12:00 AM", "Tomorrow at 10:00 AM"}    // 4-> AirKoryo
+                {"Tomorrow at 11:00 AM", "The day after tomorrow at 3:00 AM"}, // 0 → Emirates
+                {"Today at 6:00 PM", "The day after Tomorrow at 9:00 AM"}, // 1 → PIA
+                {"Today at 11:00 PM", "The day after Tomorrow at 5:00 AM"},  // 2 → AirBlue
+                {"Today at 4:00 PM", "After The Day Of Tomorrow at 8:00 AM"},   // 3 → Air India
+                {"Today at 2:00 PM", "Tomorrow at 1:00 PM"}    // 4-> AirKoryo
         };
 
         int[][] flightPrices = {
@@ -597,27 +613,36 @@ public class Main {
 
             String[] availableAirlines = new String[5]; // max 5 airlines
             int c = 0;
+            String airline="";
+            String flightNumber="";
 
             if (travelType == 1) {
                 if (isAirlineInCountry(piaCountries, cL) && isAirlineInCountry(piaCountries, dL)) {
-                    flightTimeIndex = 1;
-                    availableAirlines[c++] = "PIA";
+                    airline = "PIA";
+                    flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
+
                 if (isAirlineInCountry(airblueCountries, cL) && isAirlineInCountry(airblueCountries, dL)) {
-                    flightTimeIndex = 2;
-                    availableAirlines[c++] = "AirBlue";
+
+                     airline = "AirBlue";
+                     flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
                 if (isAirlineInCountry(emiratesCountries, cL) && isAirlineInCountry(emiratesCountries, dL)) {
-                    flightTimeIndex = 0;
-                    availableAirlines[c++] = "Emirates";
+                     airline = "Emirates";
+                    flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
                 if (isAirlineInCountry(airIndiaCountries, cL) && isAirlineInCountry(airIndiaCountries, dL)) {
-                    flightTimeIndex = 3;
-                    availableAirlines[c++] = "AirIndia";
+                     airline = "AirIndia";
+                    flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
                 if (isAirlineInCountry(airKoryo, cL) && isAirlineInCountry(airKoryo, dL)) {
-                    flightTimeIndex = 4;
-                    availableAirlines[c++] = "Air Koryo";
+                    airline = "Air Koryo";
+                    flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
             } else if (travelType == 2) {
                 boolean viaAvailable = findAndPrintRoute(arr, cL, dL, findLocationIndex(arr, cL), 2);
@@ -628,26 +653,30 @@ public class Main {
                 }
 
                 if (isAirlineInCountry(piaCountries, cL)) {
-                    availableAirlines[c++] = "PIA";
-
+                    airline = "PIA";
+                    flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
                 if (isAirlineInCountry(airblueCountries, cL)) {
-                    availableAirlines[c++] = "AirBlue";
-
+                    airline = "AirBlue";
+                    flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
                 if (isAirlineInCountry(emiratesCountries, cL)) {
-                    availableAirlines[c++] = "Emirates";
-
+                    airline = "Emirates";
+                    flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
                 if (isAirlineInCountry(airIndiaCountries, cL)) {
-                    availableAirlines[c++] = "AirIndia";
-
+                    airline = "AirIndia";
+                    flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
                 if (isAirlineInCountry(airKoryo, cL)) {
-                    availableAirlines[c++] = "Air Koryo";
-
+                    airline = "Air Koryo";
+                    flightNumber = generateFlightNumber(airline);
+                    availableAirlines[c++] = airline + " - " + flightNumber;
                 }
-
             } else {
                 System.out.println("Invalid choice! Please Select Valid Option");
                 return;
@@ -685,9 +714,10 @@ public class Main {
                     }
 
                     selectedAirline = availableAirlines[opt - 1];
+                    String cAirline = selectedAirline.split(" - ")[0];
                     System.out.println("You selected: " + selectedAirline + " " + flightType);
 
-                    switch (selectedAirline) {
+                    switch (cAirline) {
                         case "Emirates":
                             flightTimeIndex = 0;
                             break;
@@ -723,7 +753,6 @@ public class Main {
                                 con3 = false;
                             } else {
                                 System.out.println("enter the correct selection");
-                                //System.out.println("Select your flight schedule:");
                                 System.out.println("1. " + flightTimes[flightTimeIndex][0]);
                                 System.out.println("2. " + flightTimes[flightTimeIndex][1]);
                             }
@@ -738,10 +767,17 @@ public class Main {
                         System.out.println("Flight times not available for the selected airline.");
                     }
 
+                    String arrivalTime="";
+                    if(travelType == 1){
+                      arrivalTime= Arrivaltimedirect[flightTimeIndex][now - 1];
+                    }
+                    if(travelType == 2){
+                        arrivalTime=Arrivaltimevia[flightTimeIndex][now - 1];
+                    }
+
 
                     int chooseClass = 0;
                     int choosePersons;
-
 
                     System.out.println("***************************************");
                     boolean con5 = true;
@@ -756,8 +792,7 @@ public class Main {
                         }
                     }
                     int price = -1;
-                    if (flightTimeIndex >= 0 && flightTimeIndex < flightPrices.length &&
-                            chooseClass >= 1 && chooseClass <= 3) {
+                    if (flightTimeIndex >= 0 && flightTimeIndex < flightPrices.length && chooseClass >= 1 && chooseClass <= 3) {
                         price = flightPrices[flightTimeIndex][chooseClass - 1];
                         String className = switch (chooseClass) {
                             case 1 -> "First Class";
@@ -817,7 +852,7 @@ public class Main {
                                 }
                             }
                             String currencySymbol = "";
-                            double conversionRate = 1.0; // PKR by default
+                            double conversionRate ; // PKR by default
 
                             switch (currencyChoice) {
                                 case 1: // Dollars
@@ -900,17 +935,11 @@ public class Main {
                                             int i = 0;
                                             i < choosePersons; i++) {
                                         writer.write("----------- Ticket " + (i + 1) + " -----------\n");
-                                        writer.write("Passenger Name : " + names[i] + "\n");
+                                        writer.write("Passenger Name : " + names[i].toUpperCase() + "\n");
                                         writer.write("Passenger ID   : " + ids[i] + "\n");
-                                        writer.write("Airline        : " + selectedAirline + "\n");
+                                        writer.write("Flight         : " + selectedAirline + "\n");
                                         writer.write("Departure      : " + flightTimes[flightTimeIndex][now - 1] + "\n");
-//                    if(travelType == 1){
-//                        writer.write("Arrival      : " + (Arrivaltimedirect[flightTimeIndex][now - 1]) + "\n");
-//                    }
-//                    if(travelType == 2){
-//
-//                        writer.write("Arrival      : " +(Arrivaltimevia[flightTimeIndex][now - 1])  + "\n");
-//                    }
+
                                         int seatIndex = -1;
 
                                         if (chooseClass == 1) {
@@ -955,11 +984,11 @@ public class Main {
                                             // ✅ Assign values for use in check-in
                                             seatNumbers[i] = seatnumfor3[seatIndex];
                                             classNames[i] = "Economy Class";
-                                            gatesAssigned[i] = gate[3];
+                                            gatesAssigned[i] = gate[2];
 
                                             // ✅ Write ticket details
                                             writer.write("SeatNum        : " + seatnumfor3[seatIndex] + "\n");
-                                            writer.write("Gate           : " + gate[3] + "\n");
+                                            writer.write("Gate           : " + gate[2] + "\n");
                                             writer.write("Class          : Economy Class\n");
                                         }
                                         writer.write("From           : " + cL.toUpperCase() + "\n");
@@ -980,7 +1009,7 @@ public class Main {
                                 int checkInWeight;
                                 int overweightKg;
                                 boolean checkWeight = false;
-
+                                System.out.println(selectedAirline+"Debug");
                                 System.out.println("***************************************");
                                 System.out.println("\t\t WELCOME TO CHECK-IN");
                                 System.out.println("***************************************");
@@ -1016,7 +1045,7 @@ public class Main {
                                         System.out.println("From Which Airline You are Going?");
                                         checkInAirLine = sc.nextLine();
 
-                                        if (!checkInAirLine.equalsIgnoreCase(selectedAirline)) {
+                                        if (!checkInAirLine.equalsIgnoreCase(cAirline)) {
                                             System.out.println("❌ Airline mismatch. Next Person Please!");
                                             continue; // Skip to next passenger
                                         }
@@ -1030,16 +1059,7 @@ public class Main {
 
                                             if (checkInWeight <= 30 && checkInWeight>0) {
                                                 System.out.println("✅ Verification successful. Welcome, " + checkInName + "!");
-                                                printBoardingPass(
-                                                        checkInName,
-                                                        checkInAirLine,
-                                                        cL,
-                                                        checkInDestination,
-                                                        selectedTime,
-                                                        seatNumbers[passengerIndex],
-                                                        classNames[passengerIndex],
-                                                        gatesAssigned[passengerIndex]
-                                                );
+                                                printBoardingPass(checkInName, selectedAirline, cL, checkInDestination, selectedTime, seatNumbers[passengerIndex], classNames[passengerIndex], gatesAssigned[passengerIndex], arrivalTime);
                                                 checkWeight = true;
                                             } else {
                                                  overweightKg = checkInWeight - 30;
@@ -1058,6 +1078,9 @@ public class Main {
                                                         feePaid = true;
                                                         checkWeight = true;
                                                         System.out.println("✅ Thank you! Verification complete. Welcome, " + checkInName + "!");
+                                                        printBoardingPass(checkInName, selectedAirline, cL, checkInDestination, selectedTime, seatNumbers[passengerIndex], classNames[passengerIndex], gatesAssigned[passengerIndex], arrivalTime);
+
+
                                                     } else {
                                                         System.out.println("❌ Please clear your overweight dues.");
                                                     }
@@ -1069,6 +1092,9 @@ public class Main {
                                         System.out.println("❌ Verification failed. Name or ID did not match. Next Person Please!");
                                     }
                                 }
+
+
+
                             }
 
 
